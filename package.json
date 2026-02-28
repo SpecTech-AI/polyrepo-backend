@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.13.8",
+    "@prisma/client": "^6.19.2",
     "hono": "^4.7.4"
   },
   "devDependencies": {
     "@types/node": "^22.13.5",
+    "prisma": "^6.19.2",
     "tsx": "^4.19.3",
     "typescript": "^5.7.3"
   }
