@@ -7,6 +7,9 @@ import { GetBookmarksUseCase } from '../application/usecase/get-bookmarks';
 import { UpdateBookmarkUseCase } from '../application/usecase/update-bookmark';
 import { BookmarkDomainService } from '../domain/service/bookmark-domain-service';
 import { BookmarkPrismaRepository } from '../infrastructure/database/bookmark-prisma-repository';
+import { createCorsMiddleware } from '../infrastructure/middleware/cors';
+import { errorHandler } from '../infrastructure/middleware/error-handler';
+import { loggerMiddleware } from '../infrastructure/middleware/logger';
 import { createBookmarkRoutes } from './routes/bookmark-routes';
 import { createHealthRoutes } from './routes/health-routes';
 
@@ -34,6 +37,11 @@ export function createApp(): { app: Hono; prisma: PrismaClient } {
 
   // Presentation
   const app = new Hono();
+
+  // ミドルウェア
+  app.use('*', createCorsMiddleware());
+  app.use('*', loggerMiddleware);
+  app.use('*', errorHandler);
 
   // ルート
   app.route('/api', createHealthRoutes());
